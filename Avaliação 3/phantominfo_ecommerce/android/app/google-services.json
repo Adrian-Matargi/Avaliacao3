@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "973555340536",
+    "project_id": "phanthominfo",
+    "storage_bucket": "phanthominfo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973555340536:android:b2612cc31cb8fddf49d70d",
+        "android_client_info": {
+          "package_name": "com.bdapp.phantominfo_ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-uGnJT9ym5B5e0KbJ4DXDKy9kQhoAppI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
