@@ -1,4 +1,4 @@
-// lib/presentation/screens/login/login_screen.dart (Com Nome/Senha do Firestore)
+// lib/presentation/screens/login/login_screen.dart
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,26 +13,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _nameController = TextEditingController(); // Alterado para Nome
+  final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
-      final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+      final authViewModel =
+          Provider.of<AuthViewModel>(context, listen: false);
+
       try {
-        // Chamando login com Nome e Senha
-        await authViewModel.login(_nameController.text, _passwordController.text);
-        
+        await authViewModel.login(
+          _nameController.text.trim(),
+          _passwordController.text.trim(),
+        );
+
         if (mounted && authViewModel.currentUser != null) {
-          Navigator.of(context).pushReplacementNamed('/home'); 
+          Navigator.of(context).pushReplacementNamed('/home');
         }
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(e.toString())),
-          );
-        }
+        if (!mounted) return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString())),
+        );
       }
     }
   }
@@ -47,69 +51,69 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.all(32),
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              children: [
                 const Text(
-                  'Credenciais de Estudo: nome: vini, senha: 123',
-                  style: TextStyle(fontSize: 16, color: AppColors.primaryColor, fontWeight: FontWeight.bold),
+                  'Credenciais de Teste:\n nome: vini  |  senha: 123',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.center,
                 ),
+
                 const SizedBox(height: 30),
 
-                // Campo Nome
                 TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(
-                    labelText: 'Nome (Deve ser igual ao campo "name" no Firestore)',
+                    labelText: 'Nome',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.person),
                   ),
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira o nome.';
-                    }
-                    return null;
-                  },
+                  validator: (value) =>
+                      value == null || value.isEmpty ? 'Digite o nome.' : null,
                 ),
+
                 const SizedBox(height: 20),
 
-                // Campo Senha
                 TextFormField(
                   controller: _passwordController,
                   decoration: const InputDecoration(
-                    labelText: 'Senha (Deve ser igual ao campo "password" no Firestore)',
+                    labelText: 'Senha',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.lock),
                   ),
                   obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira a senha.';
-                    }
-                    return null;
-                  },
+                  validator: (value) =>
+                      value == null || value.isEmpty ? 'Digite a senha.' : null,
                 ),
+
                 const SizedBox(height: 30),
 
-                // Botão de Login
                 SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: authViewModel.isLoading ? null : _handleLogin,
+                    onPressed:
+                        authViewModel.isLoading ? null : () => _handleLogin(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
-                      foregroundColor: AppColors.backgroundColor,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                     child: authViewModel.isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text('Entrar', style: TextStyle(fontSize: 18)),
+                        : const Text(
+                            'Entrar',
+                            style: TextStyle(fontSize: 18),
+                          ),
                   ),
                 ),
               ],
