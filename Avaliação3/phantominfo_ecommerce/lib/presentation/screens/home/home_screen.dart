@@ -1,4 +1,3 @@
-// lib/presentation/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_colors.dart';
@@ -192,11 +191,9 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Seção Estática: Banners e Destaques Rápidos
-          // Adicionamos um SingleChildScrollView para permitir a rolagem vertical
-          // caso o topo da tela seja maior que o espaço disponível (telas muito pequenas)
+          // permitir a rolagem vertical
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            // Usamos Column dentro para empilhar os elementos
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -217,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          // Lista de Produtos (Deve sempre estar em Expanded para ocupar o restante da tela)
+          // Lista de Produtos
           Expanded(
             child: homeViewModel.isLoading
                 ? const Center(child: CircularProgressIndicator())

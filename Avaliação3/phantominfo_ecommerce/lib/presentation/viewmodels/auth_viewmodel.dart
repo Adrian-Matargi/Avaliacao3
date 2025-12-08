@@ -1,9 +1,6 @@
-// lib/presentation/viewmodels/auth_viewmodel.dart
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// Classe simples de usuário para estudo
 class SimpleFirestoreUser {
   final String name;
   final String documentId;
@@ -33,7 +30,7 @@ class AuthViewModel with ChangeNotifier {
     notifyListeners();
 
     try {
-      // 🔥 CORRIGIDO: Agora usa a coleção "User" EXATAMENTE como está no Firestore
+      // comparação com banco de dados do firestore
       final result = await _firestore
           .collection('User')
           .where('name', isEqualTo: name)
@@ -52,7 +49,7 @@ class AuthViewModel with ChangeNotifier {
         throw 'Senha incorreta.';
       }
 
-      // Login OK
+      // Login
       _currentUser = SimpleFirestoreUser(
         name: data['name'],
         documentId: doc.id,

@@ -1,4 +1,3 @@
-// lib/presentation/viewmodels/cart_viewmodel.dart
 import 'package:flutter/material.dart';
 import '../../data/models/product_model.dart';
 
